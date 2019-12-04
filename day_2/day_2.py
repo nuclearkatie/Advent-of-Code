@@ -67,7 +67,7 @@ if __name__ == "__main__":
                         default=2)
     args = parser.parse_args()
 
-    noun = args.noun
-    verb = args.verb
+    noun = int(args.noun[0])
+    verb = int(args.verb[0])
 
     main(noun, verb)
