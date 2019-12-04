@@ -1,7 +1,8 @@
 import csv
+import argparse
 
 
-def main():
+def main(noun, verb):
     intcode = []
     with open('intcode.csv', 'r+') as f:
         reader = csv.reader(f, delimiter=',')
@@ -9,9 +10,13 @@ def main():
             intcode.append(row)
 
     intcode = [int(i) for i in intcode[0]]
-    intcode = Restore_Gravity_Assist(intcode)
+    intcode = Restore_Gravity_Assist(intcode, noun, verb)
 
     Intcode_Program(intcode, 0)
+
+    print(intcode[0])
+
+    return intcode[0]
 
 
 def Intcode_Program(intcode, i):
@@ -20,7 +25,6 @@ def Intcode_Program(intcode, i):
     elif intcode[i] == 2:
         output = Opcode2(intcode, i)
     elif intcode[i] == 99:
-        print(intcode)
         return
     else:
         raise Exception('Intcode Error: Unknown intcode')
@@ -48,12 +52,22 @@ def Opcode2(intcode, i):
     return output
 
 
-def Restore_Gravity_Assist(intcode):
-    intcode[1] = 12
-    intcode[2] = 2
+def Restore_Gravity_Assist(intcode, noun, verb):
+    intcode[1] = noun
+    intcode[2] = verb
 
     return intcode
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-n", "--noun", help='noun value', type=int, nargs=1,
+                        default=12)
+    parser.add_argument("-v", "--verb", help='verb value', type=int, nargs=1,
+                        default=2)
+    args = parser.parse_args()
+
+    noun = args.noun
+    verb = args.verb
+
+    main(noun, verb)
