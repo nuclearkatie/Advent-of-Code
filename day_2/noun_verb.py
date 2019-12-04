@@ -16,5 +16,5 @@ if __name__ == "__main__":
                         nargs=1, default=19690720)
     args = parser.parse_args()
 
-    output = int(args.output)
+    output = int(args.output[0])
     main(output)
